@@ -1,3 +1,4 @@
+// Package git handles Git configuration operations.
 package git
 
 import (

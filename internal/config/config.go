@@ -1,3 +1,4 @@
+// Package config handles loading and saving account configurations.
 package config
 
 import (

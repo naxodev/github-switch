@@ -1,3 +1,4 @@
+// Package ssh handles SSH config file operations.
 package ssh
 
 import (
