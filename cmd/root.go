@@ -4,11 +4,12 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"runtime/debug"
 
 	"github.com/spf13/cobra"
 )
 
-var Version = "dev"
+var version = "dev"
 
 var rootCmd = &cobra.Command{
 	Use:   "github-switch",
@@ -18,7 +19,16 @@ by modifying SSH config and Git configuration.
 
 Use 'github-switch switch <account>' to switch accounts,
 or 'github-switch list' to see available accounts.`,
-	Version: Version,
+}
+
+func init() {
+	if version == "dev" {
+		if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "" {
+			version = info.Main.Version
+		}
+	}
+	rootCmd.Version = version
+	rootCmd.SetVersionTemplate("github-switch version {{.Version}}\n")
 }
 
 func Execute() {
@@ -26,8 +36,4 @@ func Execute() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-}
-
-func init() {
-	rootCmd.SetVersionTemplate("github-switch version {{.Version}}\n")
 }
